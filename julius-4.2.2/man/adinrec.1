@@ -1,0 +1,161 @@
+.\"     Title: 
+    adinrec
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "ADINREC" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+
+    adinrec
+   \- record audio device and save one utterance to a file
+.SH "SYNOPSIS"
+.HP 8
+\fBadinrec\fR [\fIoptions\fR...] {\fIfilename\fR}
+.SH "DESCRIPTION"
+.PP
+
+\fBadinrec\fR
+opens an audio stream, detects an utterance input and store it to a specified file. The utterance detection is done by level and zero\-cross thresholds. Default input device is microphone, but other audio input source, including Julius A/D\-in plugin, can be used by using "\fB\-input\fR" option.
+.PP
+The audio format is 16 bit, 1 channel, in Microsoft WAV format. If the given filename already exists, it will be overridden.
+.PP
+If filename is "\-" , the captured data will be streamed into standard out, with no header (raw format).
+.SH "OPTIONS"
+.PP
+
+\fBadinrec\fR
+uses JuliusLib and adopts Julius options. Below is a list of valid options.
+.SS "adinrec specific options"
+.PP
+\fB \-freq \fR \fIHz\fR
+.RS 3n
+Set sampling rate in Hz. (default: 16,000)
+.RE
+.PP
+\fB \-raw \fR
+.RS 3n
+Output in raw file format.
+.RE
+.SS "JuliusLib options"
+.PP
+\fB \-input \fR {mic|rawfile|adinnet|stdin|netaudio|esd|alsa|oss}
+.RS 3n
+Choose speech input source. Specify 'file' or 'rawfile' for waveform file. On file input, users will be prompted to enter the file name from stdin.
+.sp
+\'mic' is to get audio input from a default live microphone device, and 'adinnet' means receiving waveform data via tcpip network from an adinnet client. 'netaudio' is from DatLink/NetAudio input, and 'stdin' means data input from standard input.
+.sp
+At Linux, you can choose API at run time by specifying
+alsa,
+oss
+and
+esd.
+.RE
+.PP
+\fB \-chunk_size \fR \fIsamples\fR
+.RS 3n
+Audio fragment size in number of samples. (default: 1000)
+.RE
+.PP
+\fB \-lv \fR \fIthres\fR
+.RS 3n
+Level threshold for speech input detection. Values should be in range from 0 to 32767. (default: 2000)
+.RE
+.PP
+\fB \-zc \fR \fIthres\fR
+.RS 3n
+Zero crossing threshold per second. Only input that goes over the level threshold (\fB\-lv\fR) will be counted. (default: 60)
+.RE
+.PP
+\fB \-headmargin \fR \fImsec\fR
+.RS 3n
+Silence margin at the start of speech segment in milliseconds. (default: 300)
+.RE
+.PP
+\fB \-tailmargin \fR \fImsec\fR
+.RS 3n
+Silence margin at the end of speech segment in milliseconds. (default: 400)
+.RE
+.PP
+\fB \-zmean \fR
+.RS 3n
+This option enables DC offset removal.
+.RE
+.PP
+\fB \-smpFreq \fR \fIHz\fR
+.RS 3n
+Set sampling rate in Hz. (default: 16,000)
+.RE
+.PP
+\fB \-48 \fR
+.RS 3n
+Record input with 48kHz sampling, and down\-sample it to 16kHz on\-the\-fly. This option is valid for 16kHz model only. The down\-sampling routine was ported from
+sptk. (Rev. 4.0)
+.RE
+.PP
+\fB \-NA \fR \fIdevicename\fR
+.RS 3n
+Host name for DatLink server input (\fB\-input netaudio\fR).
+.RE
+.PP
+\fB \-adport \fR \fIport_number\fR
+.RS 3n
+With
+\fB\-input adinnet\fR, specify adinnet port number to listen. (default: 5530)
+.RE
+.PP
+\fB \-nostrip \fR
+.RS 3n
+Julius by default removes successive zero samples in input speech data. This option stop it.
+.RE
+.PP
+\fB \-C \fR \fIjconffile\fR
+.RS 3n
+Load a jconf file at here. The content of the jconffile will be expanded at this point.
+.RE
+.PP
+\fB \-plugindir \fR \fIdirlist\fR
+.RS 3n
+Specify which directories to load plugin. If several direcotries exist, specify them by colon\-separated list.
+.RE
+.SH "ENVIRONMENT VARIABLES"
+.PP
+\fB \fR\fB\fBALSADEV\fR\fR\fB \fR
+.RS 3n
+Device name string for ALSA. (default: "default")
+.RE
+.PP
+\fB \fR\fB\fBAUDIODEV\fR\fR\fB \fR
+.RS 3n
+Device name string for OSS. (default: "\fI/dev/dsp\fR")
+.RE
+.PP
+\fB \fR\fB\fBLATENCY_MSEC\fR\fR\fB \fR
+.RS 3n
+Input latency of microphone input in milliseconds. Smaller value will shorten latency but sometimes make process unstable. Default value will depend on the running OS.
+.RE
+.SH "SEE ALSO"
+.PP
+
+\fB julius \fR( 1 )
+,
+\fB adintool \fR( 1 )
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 1997\-2000 Information\-technology Promotion Agency, Japan
+.PP
+Copyright (c) 1991\-2008 Kawahara Lab., Kyoto University
+.PP
+Copyright (c) 2000\-2005 Shikano Lab., Nara Institute of Science and Technology
+.PP
+Copyright (c) 2005\-2008 Julius project team, Nagoya Institute of Technology
+.SH "LICENSE"
+.PP
+The same as Julius.

@@ -1,0 +1,111 @@
+.\"     Title: 
+    mkdfa.pl
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "MKDFA.PL" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+
+    mkdfa.pl
+   \- grammar compiler
+.SH "SYNOPSIS"
+.HP 9
+\fBmkdfa.pl\fR [\fIoptions\fR...] {prefix}
+.SH "DESCRIPTION"
+.PP
+
+\fBmkdfa.pl\fR
+compiles the Julian format grammar (\fI.grammar\fR
+and
+\fI.voca\fR) to Julian native formats (\fI.dfa\fR
+and
+\fI.dict\fR). In addition, "\fI.term\fR" will be also generated that stores correspondence of category ID used in the output files to the source category name.
+.PP
+
+prefix
+should be the common file name prefix of "\fI.grammar\fR" and "voca" file. From
+prefix.grammar
+and
+prefix.voca
+file,
+prefix.dfa,
+prefix.dict
+and
+prefix.term
+will be output.
+.SH "OPTIONS"
+.PP
+\fB \-n \fR
+.RS 3n
+Not process dictionary. You can only convert
+\fI.grammar\fR
+file to
+\fI.dfa\fR
+file without
+\fI.voca\fR
+file.
+.RE
+.SH "ENVIRONMENT VARIABLES"
+.PP
+\fB \fR\fB\fBTMP\fR\fR\fB or \fR\fB\fBTEMP\fR\fR\fB \fR
+.RS 3n
+Set directory to store temporal file. If not specified, one of them on the following list will be used:
+\fI/tmp\fR,
+\fI/var/tmp\fR,
+\fI/WINDOWS/Temp\fR,
+\fI/WINNT/Temp\fR.
+.RE
+.SH "EXAMPLES"
+.PP
+Convert a grammar
+\fIfoo.grammar\fR
+and
+\fIfoo.voca\fR
+to
+\fIfoo.dfa\fR,
+\fIfoo.voca\fR
+and
+\fIfoo.term\fR.
+.sp .RS 3n .nf % \fBmkdfa.pl\fR foo .fi .RE
+.SH "SEE ALSO"
+.PP
+
+\fB julius \fR( 1 )
+,
+\fB generate \fR( 1 )
+,
+\fB nextword \fR( 1 )
+,
+\fB accept_check \fR( 1 )
+,
+\fB dfa_minimize \fR( 1 )
+.SH "DIAGNOSTICS"
+.PP
+
+\fBmkdfa.pl\fR
+invokes
+\fBmkfa\fR
+and
+\fBdfa_minimize\fR
+internally. They should be placed at the same directory as
+\fBmkdfa.pl\fR.
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 1997\-2000 Information\-technology Promotion Agency, Japan
+.PP
+Copyright (c) 1991\-2008 Kawahara Lab., Kyoto University
+.PP
+Copyright (c) 2000\-2005 Shikano Lab., Nara Institute of Science and Technology
+.PP
+Copyright (c) 2005\-2008 Julius project team, Nagoya Institute of Technology
+.SH "LICENSE"
+.PP
+The same as Julius.

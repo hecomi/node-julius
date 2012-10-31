@@ -1,0 +1,49 @@
+.\"     Title: 
+    gram2sapixml.pl
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "GRAM2SAPIXML.PL" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "名前"
+
+    gram2sapixml.pl
+   \- 認識用文法を SAPI XML 文法に変換するスクリプト
+.SH "概要"
+.HP 16
+\fBgram2sapixml.pl\fR [\fIprefix\fR...]
+.SH "DESCRIPTION"
+.PP
+gram2sapixml.pl は，Julius の認識用文法ファイル (.grammar, .voca) から Microsoft SAPI XML 形式へ変換するスクリプトです．
+\fIprefix\fR
+には，変換する .grammar, .voca ファ イルのファイル名から拡張子を除外したものを指定します．複数指定した場合， それらは逐次変換されます．
+.PP
+入力文字コードは EUC\-JPを想定しています．出力ファイルは UTF\-8 エンコー ディングです．コード変換のため内部で
+\fBiconv\fR
+を使用 しています．
+.PP
+左再帰性については手作業による修正が必要です．元ファイルの .grammar の 構造をそのまま保持するため，.grammar における正順での左再帰記述がその まま .xml に反映されます．したがって，変換後 .xml に含まれる左再帰性の 解決は手作業で行わなければいけません．
+.SH "SEE ALSO"
+.PP
+
+\fB mkdfa.pl \fR( 1 )
+.SH "DIAGNOSTICS"
+.PP
+変換は，元ファイルの文法の非終端記号と終端記号(単語カテゴリ名)をルール に変換するという単純なものです．実際にSAPIアプリケーションで使う場合に は，プロパティを指定するなど，手作業での修正が必要です．
+.PP
+内部でコード変換に
+\fBiconv\fR
+を使用しています． 実行パス上に iconv が無い場合，エラーとなります．
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 2002  Takashi Sumiyoshi
+.SH "LICENSE"
+.PP
+Julius の使用許諾に準じます．

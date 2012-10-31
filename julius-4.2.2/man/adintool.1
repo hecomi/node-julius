@@ -1,0 +1,243 @@
+.\"     Title: 
+    adintool
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "ADINTOOL" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+
+    adintool
+   \- a tool to record / split / send / receive audio streams
+.SH "SYNOPSIS"
+.HP 9
+\fBadintool\fR {\-in\ \fIinputdev\fR} {\-out\ \fIoutputdev\fR} [\fIoptions\fR...]
+.SH "DESCRIPTION"
+.PP
+
+\fBadintool\fR
+analyzes speech input, finds speech segments skipping silence, and records the detected segments in various ways. It performs speech detection based on zerocross number and power (level), and records the detected parts to files or other output devices sucessively.
+.PP
+
+\fBadintool\fR
+is a upper version of adinrec with various functions. Supported input device are: microphone input, a speech file, standard tty input, and network socket (called adin\-net server mode). Julius plugin can be also used. Detected speech segments will be saved to output devices: speech files, standard tty output, and network socket (called adin\-net client mode). For example, you can split the incoming speech to segments and send them to Julius to be recognized.
+.PP
+Output format is WAV, 16bit (signed short), monoral. If the file already exist, it will be overridden.
+.SH "OPTIONS"
+.PP
+All Julius options can be set. Only audio input related options are treated and others are silently skipped. Below is a list of options.
+.SS "adintool specific options"
+.PP
+\fB \-freq \fR \fIHz\fR
+.RS 3n
+Set sampling rate in Hz. (default: 16,000)
+.RE
+.PP
+\fB \-in \fR \fIinputdev\fR
+.RS 3n
+Audio input device. "mic" to capture via microphone input, "file" for audio file input, and "stdin" to read raw data from standard\-input. For file input, file name prompt will appear after startup. Use "adinnet" to make
+\fBadintool\fR
+as "adinnet server", receiving data from client via network socket. Default port number is 5530, which can be altered by option "\fB\-inport\fR".
+.sp
+Alternatively, input device can be set by "\fB\-input\fR" option, in which case you can use plugin input.
+.RE
+.PP
+\fB \-out \fR \fIoutputdev\fR
+.RS 3n
+Audio output device store the data. Specify "file" to save to file, in which the output filename should be given by "\fB\-filename\fR". Use "stdout" to standard out. "adinnet" will make
+\fBadintool\fR
+to be an adinnet client, sending speech data to a server via tcp/ip socket. When using "adinnet" output, the server name to send data should be specified by "\fB\-server\fR". The default port number is 5530, which can be changed by "\fB\-port\fR" option.
+.RE
+.PP
+\fB \-inport \fR \fInum\fR
+.RS 3n
+When adintool becomes adinnet server to receive data (\-in adinnet), set the port number to listen. (default: 5530)
+.RE
+.PP
+\fB \-server \fR [host] [,host...]
+.RS 3n
+When output to adinnet server (\-out adinnet), set the hostname. You can send to multiple hosts by specifying their hostnames as comma\-delimited list like "host1,host2,host3".
+.RE
+.PP
+\fB \-port \fR [num] [,num...]
+.RS 3n
+When adintool send a data to adinnet server (\-out adinnet), set the port number to connect. (default: 5530) For multiple servers, specify port numbers for all servers like "5530,5530,5531".
+.RE
+.PP
+\fB \-filename \fR \fIfile\fR
+.RS 3n
+When output to file (\fB\-out file\fR), set the output filename. The actual file name will be as "\fIfile.0000.wav\fR" , "\fIfile.0001.wav\fR" and so on, where the four digit number increases as speech segment detected. The initial number will be set to 0 by default, which can be changed by "\fB\-startid\fR" option. When using "\fB\-oneshot\fR" option to save only the first segment, the input will be saved as "\fIfile\fR".
+.RE
+.PP
+\fB \-startid \fR \fInumber\fR
+.RS 3n
+At file output, set the initial file number. (default: 0)
+.RE
+.PP
+\fB \-oneshot \fR
+.RS 3n
+Exit after the end of first speech segment.
+.RE
+.PP
+\fB \-nosegment \fR
+.RS 3n
+Do not perform speech detection for input, just treat all the input as a single valid segment.
+.RE
+.PP
+\fB \-raw \fR
+.RS 3n
+Output as RAW file (no header).
+.RE
+.PP
+\fB \-autopause \fR
+.RS 3n
+When output to adinnet server,
+\fBadintool\fR
+enter pause state at every end of speech segment. It will restart when the destination adinnet server sends it a resume signal.
+.RE
+.PP
+\fB \-loosesync \fR
+.RS 3n
+When output to multiple adinnet server, not to do strict synchronization for restart. By default, when
+\fBadintool\fR
+has entered pause state, it will not restart until resume commands are received from all servers. This option will allow restart at least one restart command has arrived.
+.RE
+.PP
+\fB \-rewind \fR \fImsec\fR
+.RS 3n
+When input is a live microphone device, and there has been some continuing input at the moment
+\fBadintool\fR
+resumes, it start recording backtracking by the specified milliseconds.
+.RE
+.SS "Concerning Julius options"
+.PP
+\fB \-input \fR {mic|rawfile|adinnet|stdin|netaudio|esd|alsa|oss}
+.RS 3n
+Choose speech input source. Specify 'file' or 'rawfile' for waveform file. On file input, users will be prompted to enter the file name from stdin.
+.sp
+\'mic' is to get audio input from a default live microphone device, and 'adinnet' means receiving waveform data via tcpip network from an adinnet client. 'netaudio' is from DatLink/NetAudio input, and 'stdin' means data input from standard input.
+.sp
+At Linux, you can choose API at run time by specifying
+alsa,
+oss
+and
+esd.
+.RE
+.PP
+\fB \-chunk_size \fR \fIsamples\fR
+.RS 3n
+Audio fragment size in number of samples. (default: 1000)
+.RE
+.PP
+\fB \-lv \fR \fIthres\fR
+.RS 3n
+Level threshold for speech input detection. Values should be in range from 0 to 32767. (default: 2000)
+.RE
+.PP
+\fB \-zc \fR \fIthres\fR
+.RS 3n
+Zero crossing threshold per second. Only input that goes over the level threshold (\fB\-lv\fR) will be counted. (default: 60)
+.RE
+.PP
+\fB \-headmargin \fR \fImsec\fR
+.RS 3n
+Silence margin at the start of speech segment in milliseconds. (default: 300)
+.RE
+.PP
+\fB \-tailmargin \fR \fImsec\fR
+.RS 3n
+Silence margin at the end of speech segment in milliseconds. (default: 400)
+.RE
+.PP
+\fB \-zmean \fR
+.RS 3n
+This option enables DC offset removal.
+.RE
+.PP
+\fB \-smpFreq \fR \fIHz\fR
+.RS 3n
+Set sampling rate in Hz. (default: 16,000)
+.RE
+.PP
+\fB \-48 \fR
+.RS 3n
+Record input with 48kHz sampling, and down\-sample it to 16kHz on\-the\-fly. This option is valid for 16kHz model only. The down\-sampling routine was ported from
+sptk. (Rev. 4.0)
+.RE
+.PP
+\fB \-NA \fR \fIdevicename\fR
+.RS 3n
+Host name for DatLink server input (\fB\-input netaudio\fR).
+.RE
+.PP
+\fB \-adport \fR \fIport_number\fR
+.RS 3n
+With
+\fB\-input adinnet\fR, specify adinnet port number to listen. (default: 5530)
+.RE
+.PP
+\fB \-nostrip \fR
+.RS 3n
+Julius by default removes successive zero samples in input speech data. This option stop it.
+.RE
+.PP
+\fB \-C \fR \fIjconffile\fR
+.RS 3n
+Load a jconf file at here. The content of the jconffile will be expanded at this point.
+.RE
+.PP
+\fB \-plugindir \fR \fIdirlist\fR
+.RS 3n
+Specify which directories to load plugin. If several direcotries exist, specify them by colon\-separated list.
+.RE
+.SH "ENVIRONMENT VARIABLES"
+.PP
+\fB \fR\fB\fBALSADEV\fR\fR\fB \fR
+.RS 3n
+(using mic input with alsa device) specify a capture device name. If not specified, "default" will be used.
+.RE
+.PP
+\fB \fR\fB\fBAUDIODEV\fR\fR\fB \fR
+.RS 3n
+(using mic input with oss device) specify a capture device path. If not specified, "\fI/dev/dsp\fR" will be used.
+.RE
+.PP
+\fB \fR\fB\fBLATENCY_MSEC\fR\fR\fB \fR
+.RS 3n
+Try to set input latency of microphone input in milliseconds. Smaller value will shorten latency but sometimes make process unstable. Default value will depend on the running OS.
+.RE
+.SH "EXAMPLES"
+.PP
+Record microphone input to files: "\fIdata.0000.wav\fR", "\fIdata.0001.wav\fR" and so on:
+.sp .RS 3n .nf % \fBadintool\fR \-in mic \-out file \-filename data .fi .RE
+Split a long speech file "\fIfoobar.raw\fR" into "\fIfoobar.1500.wav\fR", "\fIfoobar.1501.wav\fR" ...:
+.sp .RS 3n .nf % \fBadintool\fR \-in file \-out file \-filename foobar \-startid 1500 % enter filename\->foobar.raw .fi .RE
+Copy an entire audio file via network socket.
+.sp .RS 3n .nf (sender) % \fBadintool\fR \-in file \-out adinnet \-server \fIreceiver_hostname\fR \-nosegment (receiver) % \fBadintool\fR \-in adinnet \-out file \-nosegment .fi .RE
+Detect speech segment, send to Julius via network and recognize it:
+.sp .RS 3n .nf (sender) % \fBadintool\fR \-in mic \-out adinnet \-server \fIreceiver_hostname\fR (receiver) % \fBjulius\fR \-C ... \-input adinnet .fi .RE
+.SH "SEE ALSO"
+.PP
+
+\fB julius \fR( 1 )
+,
+\fB adinrec \fR( 1 )
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 1997\-2000 Information\-technology Promotion Agency, Japan
+.PP
+Copyright (c) 1991\-2008 Kawahara Lab., Kyoto University
+.PP
+Copyright (c) 2000\-2005 Shikano Lab., Nara Institute of Science and Technology
+.PP
+Copyright (c) 2005\-2008 Julius project team, Nagoya Institute of Technology
+.SH "LICENSE"
+.PP
+The same as Julius.

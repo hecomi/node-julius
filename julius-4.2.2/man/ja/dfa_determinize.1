@@ -1,0 +1,65 @@
+.\"     Title: 
+    dfa_determinize
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "DFA_DETERMINIZE" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "名前"
+
+    dfa_determinize
+   \- 有限オートマトン文法を決定化する
+.SH "概要"
+.HP 16
+\fBdfa_determinize\fR [\-o\ \fIoutfile\fR] {dfafile}
+.SH "DESCRIPTION"
+.PP
+dfa_determinize は，.dfa ファイルを等価な決定性 .dfa ファイルに変換し， 標準出力に出力します．オプション
+\fB\-o\fR
+で出力先を 指定することもできます．
+.PP
+
+\fBmkdfa.pl\fR
+が生成するDFAは常に決定化されており， 通常，\fBmkdfa.pl\fR
+で作成された .dfa ファイルに対して このツールを使う必要はありません．
+.SH "OPTIONS"
+.PP
+\fB \-o \fR \fIoutfile\fR
+.RS 3n
+出力ファイル名を指定する．
+.RE
+.SH "EXAMPLES"
+.PP
+
+\fIfoo.dfa\fR
+を決定化して
+\fIbar.dfa\fR
+に 保存する．
+.sp .RS 3n .nf % \fBdfa_determinize\fR \-o bar.dfa foo.dfa .fi .RE
+別の方法：
+.sp .RS 3n .nf % \fBdfa_determinize\fR < foo.dfa > bar.dfa .fi .RE
+.SH "SEE ALSO"
+.PP
+
+\fB mkdfa.pl \fR( 1 )
+,
+\fB dfa_minimize \fR( 1 )
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 1991\-2008 京都大学 河原研究室
+.PP
+Copyright (c) 1997\-2000 情報処理振興事業協会(IPA)
+.PP
+Copyright (c) 2000\-2008 奈良先端科学技術大学院大学 鹿野研究室
+.PP
+Copyright (c) 2005\-2008 名古屋工業大学 Julius開発チーム
+.SH "LICENSE"
+.PP
+Julius の使用許諾に準じます．

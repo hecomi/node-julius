@@ -1,0 +1,96 @@
+.\"     Title: 
+    accept_check
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "ACCEPT_CHECK" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+
+    accept_check
+   \- Check whether a grammar accept / reject given word sequences
+.SH "SYNOPSIS"
+.HP 13
+\fBaccept_check\fR [\-t] [\-s\ \fIspname\fR] [\-v] {prefix}
+.SH "DESCRIPTION"
+.PP
+
+\fBaccept_check\fR
+is a tool to check whether a sentence can be accepted or rejected on a grammar (\fIprefix.dfa\fR
+and
+\fIprefix.dict\fR). The sentence should be given from standard input. You can do a batch check by preparing all test sentence at each line of a text file, and give it as standard input of
+\fBaccept_check\fR.
+.PP
+This tool needs .dfa, .dict and .term files. You should convert a written grammar file to generate them by
+\fBmkdfa.pl\fR.
+.PP
+A sentence should be given as space\-separated word sequence. It may be required to add head / tail silence word like
+sil, depending on your grammar. And should not contain a short\-pause word.
+.PP
+When a word belongs to various category in a grammar,
+\fBaccept_check\fR
+will check all the possible sentence patterns, and accept it if any of those is acceptable.
+.SH "OPTIONS"
+.PP
+\fB \-t \fR
+.RS 3n
+Use category name as input instead of word.
+.RE
+.PP
+\fB \-s \fR \fIspname\fR
+.RS 3n
+Short\-pause word name to be skipped. (default: "sp")
+.RE
+.PP
+\fB \-v \fR
+.RS 3n
+Debug output.
+.RE
+.SH "EXAMPLES"
+.PP
+An output for "date" grammar:
+.sp
+.RS 3n
+.nf
+% echo '<s> NEXT SUNDAY </s>' | accept_check date
+Reading in dictionary...
+143 words...done
+Reading in DFA grammar...done
+Mapping dict item <\-> DFA terminal (category)...done
+Reading in term file (optional)...done
+27 categories, 143 words
+DFA has 35 nodes and 71 arcs
+\-\-\-\-\-
+wseq: <s> NEXT SUNDAY </s>
+cate: NS_B (NEXT|NEXT) (DAYOFWEEK|DAYOFWEEK|DAY|DAY) NS_E
+accepted
+.fi
+.RE
+.sp
+.SH "SEE ALSO"
+.PP
+
+\fB mkdfa.pl \fR( 1 )
+,
+\fB generate \fR( 1 )
+,
+\fB nextword \fR( 1 )
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 1997\-2000 Information\-technology Promotion Agency, Japan
+.PP
+Copyright (c) 1991\-2008 Kawahara Lab., Kyoto University
+.PP
+Copyright (c) 2000\-2005 Shikano Lab., Nara Institute of Science and Technology
+.PP
+Copyright (c) 2005\-2008 Julius project team, Nagoya Institute of Technology
+.SH "LICENSE"
+.PP
+The same as Julius.

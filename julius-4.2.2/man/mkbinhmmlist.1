@@ -1,0 +1,77 @@
+.\"     Title: 
+    mkbinhmmlist
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "MKBINHMMLIST" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+
+    mkbinhmmlist
+   \- convert HMMList file into binary format
+.SH "SYNOPSIS"
+.HP 13
+\fBmkbinhmmlist\fR {hmmdefs_file} {HMMList_file} {output_binhmmlist_file}
+.SH "DESCRIPTION"
+.PP
+
+\fBmkbinhmmlist\fR
+converts a HMMList file to binary format. Since the index trees for lookup are also stored in the binary format, it will speed up the startup of Julius, namely when using big HMMList file.
+.PP
+For conversion, HMM definition file
+\fIhmmdefs_file\fR
+that will be used together at Julius needs to be specified. The format of the HMM definition file can be either ascii or Julius binary format.
+.PP
+The output binary file can be used in Julius as the same by "\fB\-hlist\fR". The format wil be auto\-detected by Julius.
+.PP
+
+\fBmkbinhmmlist\fR
+can read gzipped file.
+.SH "OPTIONS"
+.PP
+\fIhmmdefs_file\fR
+.RS 3n
+Acoustic HMM definition file, in HMM ascii format or Julius binary format.
+.RE
+.PP
+\fIHMMList_file\fR
+.RS 3n
+Source HMMList file
+.RE
+.PP
+\fIoutput_binhmmlist_file\fR
+.RS 3n
+Output file, will be overwritten if already exist.
+.RE
+.SH "EXAMPLES"
+.PP
+Convert a HMMList file
+\fIlogicalTri\fR
+into binary format and store to
+\fIlogicalTri.bin\fR:
+.sp .RS 3n .nf % \fBmkbinhmmlist\fR binhmm logicalTri logicalTri.bin .fi .RE
+.SH "SEE ALSO"
+.PP
+
+\fB julius \fR( 1 )
+,
+\fB mkbinhmm \fR( 1 )
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 1997\-2000 Information\-technology Promotion Agency, Japan
+.PP
+Copyright (c) 1991\-2008 Kawahara Lab., Kyoto University
+.PP
+Copyright (c) 2000\-2005 Shikano Lab., Nara Institute of Science and Technology
+.PP
+Copyright (c) 2005\-2008 Julius project team, Nagoya Institute of Technology
+.SH "LICENSE"
+.PP
+The same as Julius.

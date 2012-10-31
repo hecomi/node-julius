@@ -1,0 +1,109 @@
+% WORD0_0
+テレビ  t e r e b i
+% WORD1_0
+を      w o
+% WORD2_0
+つけて  ts u k e t e
+% WORD2_1
+消して  k e sh i t e
+% WORD3_0
+テレビ  t e r e b i
+% WORD4_0
+を      w o
+% WORD5_0
+切替    k i r i k a e
+% WORD6_0
+テレビ  t e r e b i
+% WORD7_0
+を      w o
+% WORD8_0
+次      ts u g i
+% WORD9_0
+テレビ  t e r e b i
+% WORD10_0
+を      w o
+% WORD11_0
+前      m a e
+% WORD12_0
+電気    d e N k i
+% WORD13_0
+を      w o
+% WORD14_0
+つけて  ts u k e t e
+% WORD15_0
+電気    d e N k i
+% WORD16_0
+を      w o
+% WORD17_0
+こだま  k o d a m a
+% WORD18_0
+電気    d e N k i
+% WORD19_0
+を      w o
+% WORD20_0
+消して  k e sh i t e
+% WORD21_0
+モニタ  m o n i t a
+% WORD22_0
+を      w o
+% WORD23_0
+つけて  ts u k e t e
+% WORD24_0
+モニタ  m o n i t a
+% WORD25_0
+を      w o
+% WORD26_0
+消して  k e sh i t e
+% NS_B
+<s>     silB
+% NS_E
+</s>    silE
+% NOISE
+<sp>	sp
+% GOMI
+あ	a
+い	i
+う	u
+え	e
+お	o
+か	k a
+き	k i
+く	k u
+け	k e
+こ	k o
+さ	s a
+し	sh i
+す	s u
+せ	s e
+そ	s o
+た	t a
+ち	ch i
+つ	ts u
+て	t e
+と	t o
+な	n a
+に	n i
+ぬ	n u
+ね	n e
+の	n o
+は	h a
+ひ	h i
+ふ	f u
+へ	h e
+ほ	h o
+ま	m a
+み	m i
+む	m u
+め	m e
+も	m o
+や	y a
+ゆ	y u
+よ	y o
+ら	r a
+り	r i
+る	r u
+れ	r e
+ろ	r o
+わ	w a
+を	w o
+ん	N

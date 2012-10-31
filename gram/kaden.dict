@@ -1,0 +1,77 @@
+0	[テレビ]	t e r e b i
+1	[を]	w o
+2	[つけて]	ts u k e t e
+3	[消して]	k e sh i t e
+4	[テレビ]	t e r e b i
+5	[を]	w o
+6	[切替]	k i r i k a e
+7	[テレビ]	t e r e b i
+8	[を]	w o
+9	[次]	ts u g i
+10	[テレビ]	t e r e b i
+11	[を]	w o
+12	[前]	m a e
+13	[電気]	d e N k i
+14	[を]	w o
+15	[つけて]	ts u k e t e
+16	[電気]	d e N k i
+17	[を]	w o
+18	[こだま]	k o d a m a
+19	[電気]	d e N k i
+20	[を]	w o
+21	[消して]	k e sh i t e
+22	[モニタ]	m o n i t a
+23	[を]	w o
+24	[つけて]	ts u k e t e
+25	[モニタ]	m o n i t a
+26	[を]	w o
+27	[消して]	k e sh i t e
+28	[<s>]	silB
+29	[</s>]	silE
+30	[<sp>]	sp
+31	[あ]	a
+31	[い]	i
+31	[う]	u
+31	[え]	e
+31	[お]	o
+31	[か]	k a
+31	[き]	k i
+31	[く]	k u
+31	[け]	k e
+31	[こ]	k o
+31	[さ]	s a
+31	[し]	sh i
+31	[す]	s u
+31	[せ]	s e
+31	[そ]	s o
+31	[た]	t a
+31	[ち]	ch i
+31	[つ]	ts u
+31	[て]	t e
+31	[と]	t o
+31	[な]	n a
+31	[に]	n i
+31	[ぬ]	n u
+31	[ね]	n e
+31	[の]	n o
+31	[は]	h a
+31	[ひ]	h i
+31	[ふ]	f u
+31	[へ]	h e
+31	[ほ]	h o
+31	[ま]	m a
+31	[み]	m i
+31	[む]	m u
+31	[め]	m e
+31	[も]	m o
+31	[や]	y a
+31	[ゆ]	y u
+31	[よ]	y o
+31	[ら]	r a
+31	[り]	r i
+31	[る]	r u
+31	[れ]	r e
+31	[ろ]	r o
+31	[わ]	w a
+31	[を]	w o
+31	[ん]	N

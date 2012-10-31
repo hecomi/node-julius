@@ -1,0 +1,95 @@
+.\"     Title: 
+    accept_check
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "ACCEPT_CHECK" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "名前"
+
+    accept_check
+   \- 文法における単語列の受理/非受理チェック
+.SH "概要"
+.HP 13
+\fBaccept_check\fR [\-t] [\-s\ \fIspname\fR] [\-v] {prefix}
+.SH "DESCRIPTION"
+.PP
+accept_check は，文法で文の受理・非受理を判定するツールです．文は標準 入力から与えます．受理すべき文を一行ずつテキストファイルにまとめて書い ておき，それをaccept_check の標準入力に与えることで，その文法 (\fIprefix.dfa\fR
+および
+\fIprefix.dict\fR) において目的の文が受理されるかどうかをバッチ的にチェックできます．
+.PP
+実行には .dfa, .dict, .term の各ファイルが必要です． あらかじめ
+\fBmkdfa.pl\fR
+で生成しておいて下さい．
+.PP
+対象とする文は，文法の語彙単位(.vocaの第1フィールド)で空白で区切って与 えます．最初と最後には多くの場合
+silB,
+silE
+が必要であることに気をつけて下さい．また， ショートポーズ単語は文に含めないでください．
+.PP
+同一表記の単語が複数ある場合，accept_check はその可能な解釈の全ての組 み合わせについて調べ，どれか１つのパターンでも受理可能であれば受理，す べてのパターンで受理不可能であれば受理不可能とします．
+.SH "OPTIONS"
+.PP
+\fB \-t \fR
+.RS 3n
+単語ではなくカテゴリ名で入力・出力する．
+.RE
+.PP
+\fB \-s \fR \fIspname\fR
+.RS 3n
+スキップすべきショートポーズ単語の名前を指定する． (default: "sp")
+.RE
+.PP
+\fB \-v \fR
+.RS 3n
+デバッグ出力．
+.RE
+.SH "EXAMPLES"
+.PP
+vfr (フィッティングタスク用文法) での実行例：
+.sp
+.RS 3n
+.nf
+% accept_check vfr
+Reading in dictionary...done
+Reading in DFA grammar...done
+Mapping dict item <\-> DFA terminal (category)...done
+Reading in term file (optional)...done
+42 categories, 99 words
+DFA has 135 nodes and 198 arcs
+\-\-\-\-\- 
+please input word sequence>silB 白 に して 下さい silE
+wseq: silB 白 に して 下さい silE
+cate: NS_B COLOR_N (NI|NI_AT) SURU_V KUDASAI_V NS_E
+accepted
+please input word sequence>
+.fi
+.RE
+.sp
+.SH "SEE ALSO"
+.PP
+
+\fB mkdfa.pl \fR( 1 )
+,
+\fB generate \fR( 1 )
+,
+\fB nextword \fR( 1 )
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 1991\-2008 京都大学 河原研究室
+.PP
+Copyright (c) 1997\-2000 情報処理振興事業協会(IPA)
+.PP
+Copyright (c) 2000\-2008 奈良先端科学技術大学院大学 鹿野研究室
+.PP
+Copyright (c) 2005\-2008 名古屋工業大学 Julius開発チーム
+.SH "LICENSE"
+.PP
+Julius の使用許諾に準じます．

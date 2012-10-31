@@ -1,0 +1,65 @@
+.\"     Title: 
+    mkss
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "MKSS" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+
+    mkss
+   \- calculate average spectrum for spectral subtraction
+.SH "SYNOPSIS"
+.HP 5
+\fBmkss\fR [\fIoptions\fR...] {filename}
+.SH "DESCRIPTION"
+.PP
+
+\fBmkss\fR
+is a tool to estimate noise spectrum for spectral subtraction on Julius. It reads a few seconds of sound data from microphone input, calculate the average spectrum and save it to a file. The output file can be used as a noise spectrum data in Julius (option "\fB\-ssload\fR").
+.PP
+The recording will start immediately after startup. Sampling format is 16bit, monoral. If outpue file already exist, it will be overridden.
+.SH "OPTIONS"
+.PP
+\fB \-freq \fR \fIHz\fR
+.RS 3n
+Sampling frequency in Hz (default: 16,000)
+.RE
+.PP
+\fB \-len \fR \fImsec\fR
+.RS 3n
+capture length in milliseconds (default: 3000)
+.RE
+.PP
+\fB \-fsize \fR \fIsample_num\fR
+.RS 3n
+frame size in number of samples (default: 400)
+.RE
+.PP
+\fB \-fshift \fR \fIsample_num\fR
+.RS 3n
+frame shift in number of samples (default: 160)
+.RE
+.SH "SEE ALSO"
+.PP
+
+\fB julius \fR( 1 )
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 1997\-2000 Information\-technology Promotion Agency, Japan
+.PP
+Copyright (c) 1991\-2008 Kawahara Lab., Kyoto University
+.PP
+Copyright (c) 2000\-2005 Shikano Lab., Nara Institute of Science and Technology
+.PP
+Copyright (c) 2005\-2008 Julius project team, Nagoya Institute of Technology
+.SH "LICENSE"
+.PP
+The same as Julius.

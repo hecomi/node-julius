@@ -1,0 +1,52 @@
+.\"     Title: 
+    mkgshmm
+  
+.\"    Author: 
+.\" Generator: DocBook XSL Stylesheets v1.71.0 <http://docbook.sf.net/>
+.\"      Date: 10/02/2008
+.\"    Manual: 
+.\"    Source: 
+.\"
+.TH "MKGSHMM" "1" "10/02/2008" "" ""
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.SH "NAME"
+
+    mkgshmm
+   \- convert monophone HMM to GS HMM for Julius
+.SH "SYNOPSIS"
+.HP 8
+\fBmkgshmm\fR {monophone_hmmdefs}
+  >
+   {outputfile}
+.SH "DESCRIPTION"
+.PP
+mkgshmm converts monophone HMM definition file in HTK format into a special format for Gaussian Mixture Selection (GMS) in Julius.
+.PP
+GMS is an algorithm to reduce the amount of acoustic computation with triphone HMM, by pre\-selection of promising gaussian mixtures using likelihoods of corresponding monophone mixtures.
+.SH "EXAMPLES"
+.PP
+(1) Prepare a monophone model which was trained by the same corpus as target triphone model.
+.PP
+(2) Convert the monophone model using mkgshmm.
+.sp .RS 3n .nf % \fBmkgshmm\fR monophone > gshmmfile .fi .RE
+(3) Specify the output file in Julius with option "\-gshmm"
+.sp .RS 3n .nf % \fBjulius\fR \-C ... \-gshmm gshmmfile .fi .RE
+.SH "SEE ALSO"
+.PP
+
+\fB julius \fR( 1 )
+.SH "COPYRIGHT"
+.PP
+Copyright (c) 1997\-2000 Information\-technology Promotion Agency, Japan
+.PP
+Copyright (c) 1991\-2008 Kawahara Lab., Kyoto University
+.PP
+Copyright (c) 2000\-2005 Shikano Lab., Nara Institute of Science and Technology
+.PP
+Copyright (c) 2005\-2008 Julius project team, Nagoya Institute of Technology
+.SH "LICENSE"
+.PP
+The same as Julius.
