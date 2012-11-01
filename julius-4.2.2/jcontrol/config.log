@@ -1,0 +1,18 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:551: checking host system type
+configure:574: checking for gcc
+configure:687: checking whether the C compiler (gcc  ) works
+configure:703: gcc -o conftest    conftest.c  1>&5
+configure:729: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:734: checking whether we are using GNU C
+configure:762: checking whether gcc accepts -g
+configure:794: checking how to run the C preprocessor
+configure:885: checking for a BSD compatible install
+configure:940: checking for rm
+configure:973: checking for Cygwin environment
+configure:1006: checking for mingw32 environment
+configure:1037: checking for executable suffix
+configure:1068: checking for gethostbyname
+configure:1163: checking for connect

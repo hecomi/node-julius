@@ -1,0 +1,25 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:1011: checking host system type
+configure:1033: checking host-specific optimization flag
+configure:1049: checking for gcc
+configure:1162: checking whether the C compiler (gcc  ) works
+configure:1178: gcc -o conftest    conftest.c  1>&5
+configure:1204: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:1209: checking whether we are using GNU C
+configure:1237: checking whether gcc accepts -g
+configure:1269: checking how to run the C preprocessor
+configure:1361: checking for a BSD compatible install
+configure:1416: checking for rm
+configure:1451: checking for ar
+configure:1486: checking for ranlib
+configure:1514: checking for Cygwin environment
+configure:1547: checking for mingw32 environment
+configure:1578: checking for executable suffix
+configure:1611: checking for ANSI C header files
+configure:1716: checking for working const
+configure:1792: checking return type of signal handlers
+configure:1833: checking for dlopen
+configure:1965: checking for POSIX thread library in -lpthread
+configure:1976: gcc -o conftest.dSYM -g -O2   conftest.c  -lpthread 1>&5

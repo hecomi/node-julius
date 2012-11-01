@@ -1,0 +1,23 @@
+This file contains any messages produced by compilers while
+running configure, to aid debugging if configure makes a mistake.
+
+configure:591: checking host system type
+configure:613: checking host-specific optimization flag
+configure:629: checking for gcc
+configure:742: checking whether the C compiler (gcc  ) works
+configure:758: gcc -o conftest    conftest.c  1>&5
+configure:784: checking whether the C compiler (gcc  ) is a cross-compiler
+configure:789: checking whether we are using GNU C
+configure:817: checking whether gcc accepts -g
+configure:849: checking how to run the C preprocessor
+configure:941: checking for a BSD compatible install
+configure:996: checking for rm
+configure:1029: checking for Cygwin environment
+configure:1062: checking for mingw32 environment
+configure:1093: checking for executable suffix
+configure:1421: checking for ANSI C header files
+configure:1526: checking for working const
+configure:1610: checking for winnls.h
+configure:1660: checking for iconv
+configure:1721: checking for iconv declaration
+configure:1966: checking for charset conversion
