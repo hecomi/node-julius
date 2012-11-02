@@ -4,17 +4,20 @@ ifeq ($(OS), Linux)
 all:
 	cd julius-4.2.2 && ./configure --with-mictype=alsa && make
 	npm install
-	cp julius-4.2.2/gramtools/mkdfa/mkdfa.pl node_modules/JuliusGrammar/tool/.
-	cp julius-4.2.2/gramtools/mkdfa/mkfa-1.44-flex/mkfa node_modules/JuliusGrammar/tool/.
-	cp julius-4.2.2/gramtools/generate/generate node_modules/JuliusGrammar/tool/.
-	cp julius-4.2.2/gramtools/dfa_minimize/dfa_minimize node_modules/JuliusGrammar/tool/.
+	cp julius-4.2.2/gramtools/mkdfa/mkdfa.pl             tool/mkdfa
+	cp julius-4.2.2/gramtools/mkdfa/mkfa-1.44-flex/mkfa  tool/.
+	cp julius-4.2.2/gramtools/generate/generate          tool/.
+	cp julius-4.2.2/gramtools/dfa_minimize/dfa_minimize  tool/.
 endif
 ifeq ($(OS), Darwin)
 all:
 	cd julius-4.2.2 && ./configure --with-mictype=portaudio && make
 	npm install
-	cp julius-4.2.2/gramtools/mkdfa/mkdfa.pl node_modules/JuliusGrammar/tool/.
-	cp julius-4.2.2/gramtools/mkdfa/mkfa-1.44-flex/mkfa.dSYM node_modules/JuliusGrammar/tool/mkfa
-	cp julius-4.2.2/gramtools/generate/generate.dSYM node_modules/JuliusGrammar/tool/generate
-	cp julius-4.2.2/gramtools/dfa_minimize/dfa_minimize.dSYM node_modules/JuliusGrammar/tool/dfa_minimize
+	cp julius-4.2.2/gramtools/mkdfa/mkdfa.pl                  tool/mkdfa
+	cp julius-4.2.2/gramtools/mkdfa/mkfa-1.44-flex/mkfa.dSYM  tool/mkfa
+	cp julius-4.2.2/gramtools/generate/generate.dSYM          tool/generate
+	cp julius-4.2.2/gramtools/dfa_minimize/dfa_minimize.dSYM  tool/dfa_minimize
 endif
+claen:
+	cd julius-4.2.2 && make clean
+	rm -rf node_modules

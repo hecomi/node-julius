@@ -1,0 +1,108 @@
+% NS_B
+<s>	silB
+% NS_E
+<s>	silE
+% NOISE
+<sp>	sp
+% HOUR
+2	n i 
+3	s a N 
+4	y o N 
+5	g o 
+6	r o k u 
+7	n a n a 
+8	h a ch i 
+9	ky u: 
+10	j u: 
+11	j u: i ch i 
+12	j u: n i 
+13	j u: s a N 
+14	j u: y o N 
+15	j u: g o 
+16	j u: r o k u 
+17	j u: n a n a 
+18	j u: h a ch i 
+19	j u: k y u: 
+20	n i j u: 
+21	n i j u: i ch i 
+22	n i j u: n i 
+23	n i j u: s a N 
+24	n i j u: y o N 
+25	n i j u: g o 
+% MINUTE
+1	i ch i 
+2	n i 
+3	s a N 
+4	y o N 
+5	g o 
+6	r o k u 
+7	n a n a 
+8	h a ch i 
+9	ky u: 
+10	j u: 
+11	j u: i ch i 
+12	j u: n i 
+13	j u: s a N 
+14	j u: y o N 
+15	j u: g o 
+16	j u: r o k u 
+17	j u: n a n a 
+18	j u: h a ch i 
+19	j u: k y u: 
+20	n i j u: 
+21	n i j u: i ch i 
+22	n i j u: n i 
+23	n i j u: s a N 
+24	n i j u: y o N 
+25	n i j u: g o 
+26	n i j u: r o k u 
+27	n i j u: n a n a 
+28	n i j u: h a ch i 
+29	n i j u: k y u: 
+30	s a N j u: 
+31	s a N j u: i ch i 
+32	s a N j u: n i 
+33	s a N j u: s a N 
+34	s a N j u: y o N 
+35	s a N j u: g o 
+36	s a N j u: r o k u 
+37	s a N j u: n a n a 
+38	s a N j u: h a ch i 
+39	s a N j u: k y u: 
+40	y o N j u: 
+41	y o N j u: i ch i 
+42	y o N j u: n i 
+43	y o N j u: s a N 
+44	y o N j u: y o N 
+45	y o N j u: g o 
+46	y o N j u: r o k u 
+47	y o N j u: n a n a 
+48	y o N j u: h a ch i 
+49	y o N j u: k y u: 
+50	g o j u: 
+51	g o j u: i ch i 
+52	g o j u: n i 
+53	g o j u: s a N 
+54	g o j u: y o N 
+55	g o j u: g o 
+56	g o j u: r o k u 
+57	g o j u: n a n a 
+58	g o j u: h a ch i 
+59	g o j u: k y u: 
+60	r o k u j u: 
+% WORD_1
+時	t o k i 
+% WORD_3
+分	b u N 
+% WORD_4_0
+電気	d e N k i 
+% WORD_4_1
+テレビ	t e r e b i 
+% WORD_4_2
+モニタ	m o n i t a 
+% WORD_5
+を	w o 
+% WORD_6_0
+つけて	ts u k e t e 
+% WORD_6_1
+消して	k e sh i t e 

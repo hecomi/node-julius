@@ -1,7 +1,7 @@
 {
   "name": "Julius",
   "version": "0.0.1",
-  "description": "voice recognition library using Julius",
+  "description": "Voice recognition library using Julius",
   "main": "julius.js",
   "dependencies": {
     "kana2voca": "~0.0.2",

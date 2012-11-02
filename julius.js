@@ -1,6 +1,7 @@
 var fs           = require('fs')
   , path         = require('path')
   , EventEmitter = require('events').EventEmitter
+  , Grammar      = require('./JuliusGrammar.js')
   , Julius
 ;
 
@@ -13,6 +14,7 @@ if ( fs.existsSync( path.join(__dirname, './build/Debug') ) ) {
 }
 
 Julius.prototype.__proto__ = EventEmitter.prototype;
-module.exports = Julius;
+Julius.Grammar = Grammar;
 
+module.exports = Julius;
 

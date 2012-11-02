@@ -8,7 +8,7 @@
 		{
 			'target_name'    : 'julius',
 			'sources'        : [
-				'julius.cpp',
+				'src/julius.cpp',
 			],
 			'cflags'         : [
 				'<!@(<(libjulius_path)/libjulius-config --cflags)',
