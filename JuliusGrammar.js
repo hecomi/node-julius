@@ -399,7 +399,7 @@ JuliusData.prototype = {
 	 */
 	deleteFiles : function(callback) {
 		var command = 'rm ';
-		['.voca', '.grammar', '.dfa', '.dict', '.term'].forEach(function(ext) {
+		['.voca', '.grammar', '.dfa', '.dict', '.term', '.jconf'].forEach(function(ext) {
 			command += this.fileName_ + ext + ' ';
 		}.bind(this));
 		exec(command, function(err, stdout, stderr) {
@@ -413,15 +413,24 @@ JuliusData.prototype = {
 	 * 出力するファイル名を出力
 	 * @param[in] fileName 出力ファイル名
 	 */
+	getJconf : function() {
+		return this.fileName_ + '.jconf';
+	},
+
+	/**
+	 * 出力するファイル名を出力
+	 * @param[in] fileName 出力ファイル名
+	 */
 	setFileName: function(fileName) {
 		this.fileName_ = fileName;
 	},
 
 	/**
-	 * voca / grammar ファイルを書き出して mkdfa を実行する
+	 * voca / grammar ファイルを書き出して mkdfa を実行し、
+	 * コンフィグファイル（.jconf）を作成する
 	 * @param[in] callback 処理が終了した時に実行されるコールバック
 	 */
-	mkdfa: function(callback) {
+	compile: function(callback) {
 		async.series({
 			voca: function(next) {
 				var fileName = this.fileName_ + '.voca';
@@ -439,14 +448,24 @@ JuliusData.prototype = {
 						return;
 					}
 					var result = {stderr: stderr, stdout: stdout};
-					if ( typeof(callback) == 'function' ) {
-						next(null, result);
-					}
+					next(null, result);
+				});
+			}.bind(this),
+			compile : function(next) {
+				var fileName = this.fileName_ + '.jconf';
+				var jconf    = '';
+				jconf += '-input mic\n';
+				jconf += '-gram ' + this.fileName_ + '\n';
+				jconf += '-h model/phone_m/hmmdefs_monof_mix16_gid.binhmm';
+				fs.writeFile(fileName, jconf, function(err) {
+					next(err, null);
 				});
 			}.bind(this)
 		},
 		function(err, result) {
-			callback(err, result.mkdfa);
+			if ( typeof(callback) == 'function' ) {
+				callback(err, result.mkdfa);
+			}
 		});
 	},
 

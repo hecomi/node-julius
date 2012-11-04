@@ -17,7 +17,7 @@ all:
 	cp julius-4.2.2/gramtools/mkdfa/mkfa-1.44-flex/mkfa.dSYM  tool/mkfa
 	cp julius-4.2.2/gramtools/generate/generate.dSYM          tool/generate
 	cp julius-4.2.2/gramtools/dfa_minimize/dfa_minimize.dSYM  tool/dfa_minimize
-endif
 claen:
-	cd julius-4.2.2 && make clean
+	cd julius-4.2.2 && make distclean
 	rm -rf node_modules
+endif

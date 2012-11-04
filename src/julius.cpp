@@ -52,6 +52,7 @@ Handle<v8::Value> Julius::New(const Arguments& args)
 	HandleScope scope;
 
 	String::Utf8Value jconf_path(args[0]);
+	std::cout << *jconf_path << std::endl;
 	auto _this = new Julius(*jconf_path);
 	_this->Wrap( args.This() );
 
@@ -110,6 +111,7 @@ Handle<v8::Value> Julius::Reload(const Arguments& args)
 
 	String::Utf8Value jconf_path(args[0]);
 	auto _this = ObjectWrap::Unwrap<Julius>( args.This() );
+	j_close_stream(_this->recog_);
 	_this->init(*jconf_path);
 	_this->Emit("reload");
 
@@ -171,7 +173,6 @@ Julius::~Julius()
 void Julius::init(const std::string& jconf_path)
 {
 	make_recog(jconf_path);
-	add_callbacks();
 
 	// デバッグメッセージを消す
 	j_disable_debug_message();
@@ -181,12 +182,12 @@ void Julius::init(const std::string& jconf_path)
 
 void Julius::make_recog(const std::string& jconf_path)
 {
-	// recog_ が既にある場合は破棄
-	if (recog_ != nullptr) {
-		free_recog();
-	}
+	// 古い recog がある場合は破棄
+	free_recog();
 
+	// jconf を読み込む
 	std::vector<char> path( jconf_path.begin(), jconf_path.end() );
+	path.push_back('\0');
 	auto jconf = j_config_load_file_new( &path[0] );
 	if (jconf == nullptr) {
 		Emit("error", "Error@j_config_load_file_new");
@@ -206,11 +207,17 @@ void Julius::make_recog(const std::string& jconf_path)
 		return;
 	}
 
+	// コールバックを追加
+	add_callbacks();
 }
 
 
 void Julius::free_recog()
 {
+	if (recog_ == nullptr) {
+		return;
+	}
+
 	j_close_stream(recog_);
 
 	j_jconf_free(recog_->jconf);

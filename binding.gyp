@@ -4,6 +4,9 @@
 		'libjulius_path' : 'julius-<(julius_ver)/libjulius',
 		'libsent_path'   : 'julius-<(julius_ver)/libsent',
 	},
+	'action': [
+		'make',
+	],
 	'targets': [
 		{
 			'target_name'    : 'julius',
