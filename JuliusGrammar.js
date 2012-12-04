@@ -456,7 +456,7 @@ JuliusData.prototype = {
 				var jconf    = '';
 				jconf += '-input mic\n';
 				jconf += '-gram ' + this.fileName_ + '\n';
-				jconf += '-h model/phone_m/hmmdefs_monof_mix16_gid.binhmm';
+				jconf += '-h ' + path.join(__dirname, 'model/phone_m/hmmdefs_monof_mix16_gid.binhmm');
 				fs.writeFile(fileName, jconf, function(err) {
 					next(err, null);
 				});
