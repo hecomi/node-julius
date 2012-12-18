@@ -1,17 +1,16 @@
 {
   "name": "Julius",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Voice recognition library using Julius",
   "main": "julius.js",
   "dependencies": {
-    "kana2voca": "~0.0.2",
     "mecab-async": "~0.0.3",
     "async": "~0.1.22"
   },
   "devDependencies": {},
   "scripts": {
     "test": "node test/test",
-    "install": "node-gyp rebuild"
+    "install": "make"
   },
   "repository": "",
   "author": "hecomi",

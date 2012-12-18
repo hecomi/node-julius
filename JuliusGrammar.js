@@ -6,10 +6,10 @@ var Gin       = require('./gin.js')
   ; exec      = require('child_process').exec
   ; fs        = require('fs')
   ; async     = require('async')
-  ; kana2voca = require('kana2voca').sync
   ; MeCab     = require('mecab-async')
   ; mecab     = new MeCab()
 ;
+require('kana2voca');
 
 /* ------------------------------------------------------------------------- */
 // 便利関数
@@ -84,7 +84,7 @@ String.prototype.toKana = function() {
  */
 String.prototype.toVoca = function() {
 	var kana = this.toString().toKana();
-	return kana2voca(kana);
+	return kana.fromKanaToVoca();
 }
 
 /* ------------------------------------------------------------------------- */
