@@ -2,7 +2,6 @@ OS = ${shell uname}
 
 ifeq ($(OS), Linux)
 all:
-	cp -r node_modules/pre/kana2voca node_modules/.
 	cd julius-4.2.2 && ./configure --with-mictype=alsa && make
 	cp julius-4.2.2/gramtools/mkdfa/mkdfa.pl             tool/mkdfa
 	cp julius-4.2.2/gramtools/mkdfa/mkfa-1.44-flex/mkfa  tool/.
@@ -12,7 +11,6 @@ all:
 endif
 ifeq ($(OS), Darwin)
 all:
-	cp -r node_modules/pre/kana2voca node_modules/.
 	cd julius-4.2.2 && ./configure --with-mictype=portaudio && make
 	cp julius-4.2.2/gramtools/mkdfa/mkdfa.pl                  tool/mkdfa
 	cp julius-4.2.2/gramtools/mkdfa/mkfa-1.44-flex/mkfa.dSYM  tool/mkfa

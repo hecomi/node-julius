@@ -1,9 +1,0 @@
-This file contains any messages produced by compilers while
-running configure, to aid debugging if configure makes a mistake.
-
-configure:556: checking for a BSD compatible install
-configure:611: checking for rm
-configure:646: checking for perl
-configure:679: checking for Cygwin environment
-configure:712: checking for mingw32 environment
-configure:743: checking for executable suffix

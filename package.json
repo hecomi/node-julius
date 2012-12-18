@@ -1,6 +1,6 @@
 {
-  "name": "Julius",
-  "version": "0.0.2",
+  "name": "julius",
+  "version": "0.0.1",
   "description": "Voice recognition library using Julius",
   "main": "julius.js",
   "dependencies": {
@@ -12,7 +12,10 @@
     "test": "node test/test",
     "install": "make"
   },
-  "repository": "",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/hecomi/node-julius.git"
+  },
   "author": "hecomi",
   "gypfile": true
 }
