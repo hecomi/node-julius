@@ -26,6 +26,11 @@ String.prototype.fromKanaToVoca = function() {
 		var voca = hiragana_to_voca[hiragana];
 		result = result.split(hiragana).join(voca);
 	}
+	while (1) {
+		var tmp = result.split('::').join(':');
+		if (result === tmp) break;
+		else result = tmp;
+	}
 	return result;
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "julius",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Voice recognition library using Julius",
   "main": "julius.js",
   "dependencies": {
