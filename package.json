@@ -10,7 +10,7 @@
   "devDependencies": {},
   "scripts": {
     "test": "node test/test",
-    "install": "make"
+	"install": "make"
   },
   "repository": {
     "type": "git",

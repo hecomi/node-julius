@@ -84,10 +84,10 @@ Handle<v8::Value> Julius::Start(const Arguments& args)
 			_this->Emit("start");
 			j_recognize_stream(_this->recog_);
 		},
-		[](uv_work_t* req) {
+		(uv_after_work_cb)([](uv_work_t* req, int) {
 			auto _this = static_cast<Julius*>(req->data);
 			_this->Unref(); // v8 に GC を許可する
-		}
+		})
 	);
 
 	return scope.Close( Boolean::New(true) );
@@ -133,7 +133,7 @@ void Julius::Emit(const std::string& msg, const std::string& result)
 		uv_default_loop(),
 		req,
 		[](uv_work_t* req) {},
-		[](uv_work_t* req) {
+		(uv_after_work_cb)([](uv_work_s* req, int) {
 			uv_mutex_lock(&m);
 			HandleScope scope;
 
@@ -150,7 +150,7 @@ void Julius::Emit(const std::string& msg, const std::string& result)
 			}
 
 			uv_mutex_unlock(&m);
-		}
+		})
 	);
 }
 

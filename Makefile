@@ -22,3 +22,5 @@ endif
 clean:
 	cd julius-4.2.2 && make clean && make distclean
 	rm -rf node_modules/async node_modules/mecab-async node_modules/kana2voca
+	rmdir node_modules
+

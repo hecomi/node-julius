@@ -32,9 +32,6 @@
 			},
 			'conditions': [
 				['OS=="mac"', {
-					'include_dirs' : [
-						'/usr/local/include/libcxx',
-					],
 					'xcode_settings' : {
 						'OTHER_CFLAGS': [
 							'<!@(<(libjulius_path)/libjulius-config --cflags)',
