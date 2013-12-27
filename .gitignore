@@ -1,3 +1,5 @@
 *.o
 *.a
 build/
+gram/
+npm-debug.log

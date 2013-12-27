@@ -1,0 +1,6 @@
+test.js
+data/
+*.o
+.lock-wscript
+oll.js
+.deps
