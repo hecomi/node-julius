@@ -1,19 +1,19 @@
 /**
  * @file   main.c
- * 
+ *
  * <JA>
  * @brief  Julius/Julian メイン
  * </JA>
- * 
+ *
  * <EN>
  * @brief  Main function of Julius/Julian
  * </EN>
- * 
+ *
  * @author Akinobu Lee
  * @date   Wed May 18 15:02:55 2005
  *
  * $Revision: 1.7 $
- * 
+ *
  */
 /*
  * Copyright (c) 1991-2013 Kawahara Lab., Kyoto University
@@ -34,7 +34,7 @@ static boolean nolog = FALSE;
 /************************************************************************/
 /**
  * Callbacks for application option handling.
- * 
+ *
  */
 static boolean
 opt_help(Jconf *jconf, char *arg[], int argnum)
@@ -69,7 +69,7 @@ opt_outfile(Jconf *jconf, char *arg[], int argnum)
   outfile_enabled = TRUE;
   return TRUE;
 }
-   
+
 /**********************************************************************/
 int
 main(int argc, char *argv[])
@@ -142,7 +142,7 @@ main(int argc, char *argv[])
     if (logfile) fclose(fp);
     return -1;
   }
-  
+
 #ifdef USER_LM_TEST
   {
     PROCESS_LM *lm;
@@ -160,7 +160,7 @@ main(int argc, char *argv[])
     if (logfile) fclose(fp);
     return -1;
   }
-  
+
   /* Set up some application functions */
   /* set character conversion mode */
   if (charconv_setup() == FALSE) {
@@ -194,7 +194,7 @@ main(int argc, char *argv[])
 
   /* initialize and standby the specified audio input source */
   /* for microphone or other threaded input, ad-in thread starts here */
-  if (j_adin_init(recog) == FALSE) return;
+  if (j_adin_init(recog) == FALSE) return EXIT_FAILURE;
 
   /* output system information to log */
   j_recog_info(recog);
@@ -212,7 +212,7 @@ main(int argc, char *argv[])
   /* 第2パスで認識結果出力時に以下を実行 */
   visual2_best(now, recog->model->winfo);
 #endif
-  
+
   /* if no grammar specified on startup, start with pause status */
   {
     RecogProcess *r;
