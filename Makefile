@@ -1,8 +1,10 @@
 OS = ${shell uname}
 JULIUS = julius-4.3
 
+
 ifeq ($(OS), Linux)
 all:
+	mkdir tool
 	cd $(JULIUS) && ./configure --with-mictype=alsa && make
 	cp $(JULIUS)/gramtools/mkdfa/mkdfa.pl             tool/mkdfa
 	cp $(JULIUS)/gramtools/mkdfa/mkfa-1.44-flex/mkfa  tool/.
