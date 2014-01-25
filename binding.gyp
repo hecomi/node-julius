@@ -16,7 +16,7 @@
 			'cflags'         : [
 				'<!@(<(libjulius_path)/libjulius-config --cflags)',
 				'<!@(<(libsent_path)/libsent-config --cflags)',
-				'-std=c++0x',
+				'-std=c++11',
 			],
 			'include_dirs'   : [
 				'<(libjulius_path)/include',
@@ -36,7 +36,7 @@
 						'OTHER_CFLAGS': [
 							'<!@(<(libjulius_path)/libjulius-config --cflags)',
 							'<!@(<(libsent_path)/libsent-config --cflags)',
-							'-std=c++0x',
+							'-std=c++11',
 						],
 					},
 				}],

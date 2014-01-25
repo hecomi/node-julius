@@ -1,6 +1,5 @@
 #include <iostream>
 #include <memory>
-#include <mutex>
 #include "julius.hpp"
 
 using namespace node;
