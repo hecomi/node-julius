@@ -2,12 +2,12 @@
 // ライブラリの読み込み
 /* ------------------------------------------------------------------------- */
 var Gin       = require('./gin.js')
-  ; path      = require('path')
-  ; exec      = require('child_process').exec
-  ; fs        = require('fs')
-  ; async     = require('async')
-  ; MeCab     = require('mecab-async')
-  ; mecab     = new MeCab()
+  , path      = require('path')
+  , exec      = require('child_process').exec
+  , fs        = require('fs')
+  , async     = require('async')
+  , MeCab     = require('mecab-async')
+  , mecab     = new MeCab()
 ;
 
 /* ------------------------------------------------------------------------- */
@@ -116,6 +116,14 @@ var katakana_to_hiragana = {
 	'プ' : 'ぷ',
 	'ペ' : 'ぺ',
 	'ポ' : 'ぽ',
+	'ァ' : 'ぁ',
+	'ィ' : 'ぃ',
+	'ゥ' : 'ぅ',
+	'ェ' : 'ぇ',
+	'ォ' : 'ぉ',
+	'ヵ' : 'か',
+	'ヶ' : 'か',
+	'ッ' : 'っ',
 	'ャ' : 'ゃ',
 	'ュ' : 'ゅ',
 	'ョ' : 'ょ'
