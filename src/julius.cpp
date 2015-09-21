@@ -344,12 +344,12 @@ bool Julius::delete_callback(const int id)
 //  node.js の addon 化
 /* ------------------------------------------------------------------------- */
 
-void init(Handle<Object> target)
+void init(Local<Object> target)
 {
 	auto isolate = Isolate::GetCurrent();
-
 	assert( uv_mutex_init(&m) == 0 );
 	emit_symbol.Reset( isolate, String::NewFromUtf8(isolate, "emit") );
+
 	Julius::Init(target);
 }
 
