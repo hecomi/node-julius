@@ -632,7 +632,7 @@ Handler.prototype = {
 /**
  * Julius の文法に必要なファイルを生成する
  */
-var JuliusData = function() {
+var JuliusGrammar = function() {
 	this.num_             = 0;
 	this.DEFAULT_VOCA_STR = '% NS_B\n<s>\tsilB\n% NS_E\n<s>\tsilE\n% NOISE\n<sp>\tsp\n';
 	this.DEFAULT_GRAM_STR = 'S\t: NS_B NOISE NS_E\n';
@@ -643,7 +643,7 @@ var JuliusData = function() {
 	this.generatePath_    = path.join(__dirname, 'tool/generate');
 }
 
-JuliusData.prototype = {
+JuliusGrammar.prototype = {
 	/**
 	 * Gin による構文解析結果から Julius の grammar 形式、voca 形式を生成する.
 	 * 解析結果（Nodeクラス）は兄弟/子供を持つので、再帰的に子供を調べる
@@ -906,4 +906,4 @@ JuliusData.prototype = {
 /* ------------------------------------------------------------------------- */
 // エクスポート
 /* ------------------------------------------------------------------------- */
-module.exports = JuliusData;
+module.exports = JuliusGrammar;

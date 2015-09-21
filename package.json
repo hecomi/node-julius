@@ -1,11 +1,11 @@
 {
   "name": "julius",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Voice recognition library using Julius",
   "main": "julius.js",
   "dependencies": {
-    "mecab-async": "~0.0.3",
-    "async": "~0.1.22"
+    "mecab-async": "*",
+    "async": "*"
   },
   "devDependencies": {},
   "scripts": {

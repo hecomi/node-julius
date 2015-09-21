@@ -1,7 +1,7 @@
 var fs           = require('fs')
   , path         = require('path')
   , EventEmitter = require('events').EventEmitter
-  , Grammar      = require('./JuliusGrammar.js')
+  , Grammar      = require('./grammar')
   , Julius
 ;
 

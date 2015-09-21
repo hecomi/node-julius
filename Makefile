@@ -4,7 +4,7 @@ TOOLDIR = tool
 
 ifeq ($(OS), Linux)
 all:
-	mkdir $(TOOLDIR)
+	mkdir -p $(TOOLDIR)
 	cd $(JULIUS) && ./configure --with-mictype=alsa && make
 	cp $(JULIUS)/gram$(TOOLDIR)s/mkdfa/mkdfa.pl             $(TOOLDIR)/mkdfa
 	cp $(JULIUS)/gram$(TOOLDIR)s/mkdfa/mkfa-1.44-flex/mkfa  $(TOOLDIR)/.
@@ -14,7 +14,7 @@ all:
 endif
 ifeq ($(OS), Darwin)
 all:
-	mkdir $(TOOLDIR)
+	mkdir -p $(TOOLDIR)
 	cd $(JULIUS) && ./configure --with-mictype=portaudio && make
 	cp $(JULIUS)/gramtools/mkdfa/mkdfa.pl                  $(TOOLDIR)/mkdfa
 	cp $(JULIUS)/gramtools/mkdfa/mkfa-1.44-flex/mkfa.dSYM  $(TOOLDIR)/mkfa

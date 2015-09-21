@@ -1,5 +1,6 @@
 *.o
 *.a
+*.dSYM
 build/
 gram/
 npm-debug.log

@@ -1,4 +1,4 @@
-var Julius  = require('../julius.js')
+var Julius  = require('../julius')
   , grammar = new Julius.Grammar()
 ;
 

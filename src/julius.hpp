@@ -5,6 +5,7 @@
 #include <vector>
 #include <julius/juliuslib.h>
 #include <node.h>
+#include <node_object_wrap.h>
 
 /**
  * Julius を扱うクラス
@@ -30,7 +31,7 @@ public:
 	 *  Node.js の世界へエクスポートする
 	 *  @param[out] target  NODE_MODULES でエクスポートする関数の引数
 	 */
-	static void Init(v8::Handle<v8::Object>& target);
+	static void Init(v8::Local<v8::Object>& target);
 
 private:
 	/**
@@ -41,37 +42,37 @@ private:
 
 	/**
 	 *  JavaScript 側で new された時に呼ばれる
-	 *  @param[in] args  JavaScript 側で与えられる引数
+	 *  @param[in] args  JavaScript 側から与えられる引数の取得や返り値のセット
 	 */
-	static v8::Handle<v8::Value> New(const v8::Arguments& args);
+	static void New(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	/**
 	 *  JavaScript 側で定義したイベントリスナを呼ぶ
 	 *  @param[in] msg   イベント名
-	 *  @param[in] args  引数
+	 *  @param[in] args  JavaScript 側から与えられる引数の取得や返り値のセット
 	 */
 	void Emit(const std::string& msg, const std::string& result = "");
 
 	/**
 	 *  Julius の音声認識を開始するメソッド
 	 *  JavaScript 側で start すると呼ばれる
-	 *  @param[in] args  JavaScript 側で与えられる引数
+	 *  @param[in] args  JavaScript 側から与えられる引数の取得や返り値のセット
 	 */
-	static v8::Handle<v8::Value> Start(const v8::Arguments& args);
+	static void Start(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	/**
 	 *  Julius を終了するメソッド
 	 *  JavaScript 側で close すると呼ばれる
-	 *  @param[in] args  JavaScript 側で与えられる引数
+	 *  @param[in] args  JavaScript 側から与えられる引数の取得や返り値のセット
 	 */
-	static v8::Handle<v8::Value> Stop(const v8::Arguments& args);
+	static void Stop(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	/**
 	 *  Julius の設定をリロードするメソッド
 	 *  JavaScript 側で reload すると呼ばれる
-	 *  @param[in] args  JavaScript 側で与えられる引数
+	 *  @param[in] args  JavaScript 側から与えられる引数の取得や返り値のセット
 	 */
-	static v8::Handle<v8::Value> Reload(const v8::Arguments& args);
+	static void Reload(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	/**
 	 *  音声認識を行う Recog インスタンスを生成する

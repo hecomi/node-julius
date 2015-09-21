@@ -1,3 +1,4 @@
+#include <uv.h>
 #include <iostream>
 #include <memory>
 #include "julius.hpp"
@@ -5,16 +6,19 @@
 using namespace node;
 using namespace v8;
 
+
+
 /* ------------------------------------------------------------------------- */
 //  グローバル変数 / データやりとり用 構造体
 /* ------------------------------------------------------------------------- */
-// EventEmitter.emit 用のシンボル
+
+//! EventEmitter.emit 用のシンボル
 static Persistent<String> emit_symbol;
 
 //! Julius の別スレッドからのアクセス用
 static uv_mutex_t m;
 
-// Emit でやりとりするデータ
+//! Emit でやりとりするデータ
 struct EmitData
 {
 	Julius *_this;
@@ -22,52 +26,70 @@ struct EmitData
 	std::string result;
 };
 
+
+
 /* ------------------------------------------------------------------------- */
 //  Static メンバ
 /* ------------------------------------------------------------------------- */
-void Julius::Init(Handle<Object>& target)
+
+void Julius::Init(Local<Object>& target)
 {
-	auto clazz = FunctionTemplate::New(Julius::New);
-	clazz->SetClassName( String::NewSymbol("Julius") );
+	auto isolate = Isolate::GetCurrent();
+
+	auto clazz = FunctionTemplate::New(isolate, Julius::New);
+
+	clazz->SetClassName( String::NewFromUtf8(isolate, "Julius") );
 	clazz->InstanceTemplate()->SetInternalFieldCount(1);
+
 	clazz->PrototypeTemplate()->Set(
-		String::NewSymbol("start"),
-		FunctionTemplate::New(Julius::Start)->GetFunction()
+		String::NewFromUtf8(isolate, "start"),
+		FunctionTemplate::New(isolate, Julius::Start)->GetFunction()
 	);
 	clazz->PrototypeTemplate()->Set(
-		String::NewSymbol("reload"),
-		FunctionTemplate::New(Julius::Reload)->GetFunction()
+		String::NewFromUtf8(isolate, "reload"),
+		FunctionTemplate::New(isolate, Julius::Reload)->GetFunction()
 	);
 	clazz->PrototypeTemplate()->Set(
-		String::NewSymbol("stop"),
-		FunctionTemplate::New(Julius::Stop)->GetFunction()
+		String::NewFromUtf8(isolate, "stop"),
+		FunctionTemplate::New(isolate, Julius::Stop)->GetFunction()
 	);
-	target->Set( String::NewSymbol("Julius"), clazz->GetFunction() );
+
+	target->Set( String::NewFromUtf8(isolate, "Julius"), clazz->GetFunction() );
 }
 
 
-Handle<v8::Value> Julius::New(const Arguments& args)
+void Julius::New(const FunctionCallbackInfo<v8::Value>& args)
 {
-	HandleScope scope;
+	auto isolate = Isolate::GetCurrent();
+	HandleScope scope(isolate);
 
 	String::Utf8Value jconf_path(args[0]);
 	std::cout << *jconf_path << std::endl;
 	auto _this = new Julius(*jconf_path);
 	_this->Wrap( args.This() );
 
-	return scope.Close( args.This() );
+	args.GetReturnValue().Set( args.This() );
 }
 
 
-Handle<v8::Value> Julius::Start(const Arguments& args)
+void Julius::Start(const FunctionCallbackInfo<v8::Value>& args)
 {
-	HandleScope scope;
+	auto isolate = Isolate::GetCurrent();
+	HandleScope scope(isolate);
+
 	auto _this = ObjectWrap::Unwrap<Julius>( args.This() );
 
 	switch (j_open_stream(_this->recog_, nullptr)) {
-		case  0: break; // success
-		case -1: _this->Emit("error", "Error in input stream");        return scope.Close( Boolean::New(false) );
-		case -2: _this->Emit("error", "Failed to begin input stream"); return scope.Close( Boolean::New(false) );
+		case 0:
+			break; // success
+		case -1:
+			_this->Emit("error", "Error in input stream");
+			args.GetReturnValue().Set(false);
+			return;
+		case -2:
+			_this->Emit("error", "Failed to begin input stream");
+			args.GetReturnValue().Set(false);
+			return;
 	}
 
 	auto req  = new uv_work_t;
@@ -89,24 +111,27 @@ Handle<v8::Value> Julius::Start(const Arguments& args)
 		})
 	);
 
-	return scope.Close( Boolean::New(true) );
+	args.GetReturnValue().Set(true);
 };
 
 
-Handle<v8::Value> Julius::Stop(const Arguments& args)
+void Julius::Stop(const FunctionCallbackInfo<v8::Value>& args)
 {
-	HandleScope scope;
+	auto isolate = Isolate::GetCurrent();
+	HandleScope scope(isolate);
 
 	auto _this = ObjectWrap::Unwrap<Julius>( args.This() );
 	j_close_stream(_this->recog_);
 	_this->Emit("pause");
 
-	return scope.Close( Undefined() );
+	args.GetReturnValue().SetUndefined();
 };
 
-Handle<v8::Value> Julius::Reload(const Arguments& args)
+
+void Julius::Reload(const FunctionCallbackInfo<v8::Value>& args)
 {
-	HandleScope scope;
+	auto isolate = Isolate::GetCurrent();
+	HandleScope scope(isolate);
 
 	String::Utf8Value jconf_path(args[0]);
 	auto _this = ObjectWrap::Unwrap<Julius>( args.This() );
@@ -114,8 +139,9 @@ Handle<v8::Value> Julius::Reload(const Arguments& args)
 	_this->init(*jconf_path);
 	_this->Emit("reload");
 
-	return scope.Close( Undefined() );
+	args.GetReturnValue().SetUndefined();
 };
+
 
 void Julius::Emit(const std::string& msg, const std::string& result)
 {
@@ -134,18 +160,24 @@ void Julius::Emit(const std::string& msg, const std::string& result)
 		[](uv_work_t* req) {},
 		(uv_after_work_cb)([](uv_work_s* req, int) {
 			uv_mutex_lock(&m);
-			HandleScope scope;
+
+			auto isolate = Isolate::GetCurrent();
+			HandleScope scope(isolate);
 
 			auto data = static_cast<EmitData*>(req->data);
-			auto emit_v = data->_this->handle_->Get(emit_symbol);
+			auto symbol = Local<v8::String>::New(isolate, emit_symbol);
+			auto emit_v = data->_this->handle(isolate)->Get(symbol);
 			assert( emit_v->IsFunction() );
 			auto emit = emit_v.As<Function>();
 
 			TryCatch tc;
-			Handle<v8::Value> argv[] = { String::New(data->msg.c_str()), String::New(data->result.c_str()) };
-			emit->Call(data->_this->handle_, 2, argv);
+			Handle<v8::Value> argv[] = {
+				String::NewFromUtf8(isolate, data->msg.c_str()),
+				String::NewFromUtf8(isolate, data->result.c_str())
+			};
+			emit->Call(data->_this->handle(isolate), 2, argv);
 			if ( tc.HasCaught() ) {
-				FatalException(tc);
+				FatalException(isolate, tc);
 			}
 
 			uv_mutex_unlock(&m);
@@ -153,9 +185,12 @@ void Julius::Emit(const std::string& msg, const std::string& result)
 	);
 }
 
+
+
 /* ------------------------------------------------------------------------- */
 //  non-Static メンバ
 /* ------------------------------------------------------------------------- */
+
 Julius::Julius(const std::string& jconf_path)
 : recog_(nullptr)
 {
@@ -267,7 +302,7 @@ void Julius::on_result(Recog* recog)
 {
 	// 結果を走査
 	for (const RecogProcess *r = recog->process_list; r; r = r->next) {
-		WORD_INFO *winfo = r->lm->winfo;
+		WORD_INFO *wargs = r->lm->winfo;
 
 		// 仮説の数に応じてループ
 		for (int n = 0; n < r->result.sentnum; ++n) {
@@ -281,8 +316,8 @@ void Julius::on_result(Recog* recog)
 			// 認識結果の文章を取得
 			std::string output;
 			for (int i = 1; i < seqnum-1; ++i) {
-				// result[n][i] = winfo->woutput[seq[i]];
-				output += winfo->woutput[seq[i]];
+				// result[n][i] = wargs->woutput[seq[i]];
+				output += wargs->woutput[seq[i]];
 			}
 
 			// JavaScript のコールバックを呼ぶ
@@ -303,13 +338,18 @@ bool Julius::delete_callback(const int id)
 	return callback_delete(recog_, id);
 }
 
+
+
 /* ------------------------------------------------------------------------- */
 //  node.js の addon 化
 /* ------------------------------------------------------------------------- */
+
 void init(Handle<Object> target)
 {
+	auto isolate = Isolate::GetCurrent();
+
 	assert( uv_mutex_init(&m) == 0 );
-	emit_symbol = NODE_PSYMBOL("emit");
+	emit_symbol.Reset( isolate, String::NewFromUtf8(isolate, "emit") );
 	Julius::Init(target);
 }
 
