@@ -1,27 +1,25 @@
 OS      = ${shell uname}
-JULIUS  = julius-4.3
+JULIUS  = julius-4.4.2
 TOOLDIR = tool
 
 ifeq ($(OS), Linux)
+FLAGS = --with-mictype=alsa
+else
+ifeq ($(OS), Darwin)
+FLAGS = --with-mictype=portaudio
+else
+FLAGS =
+endif
+endif
+
 all:
 	mkdir -p $(TOOLDIR)
-	cd $(JULIUS) && ./configure --with-mictype=alsa && make
+	cd $(JULIUS) && ./configure $(FLAGS) && make
 	cp $(JULIUS)/gram$(TOOLDIR)s/mkdfa/mkdfa.pl             $(TOOLDIR)/mkdfa
 	cp $(JULIUS)/gram$(TOOLDIR)s/mkdfa/mkfa-1.44-flex/mkfa  $(TOOLDIR)/.
 	cp $(JULIUS)/gram$(TOOLDIR)s/generate/generate          $(TOOLDIR)/.
 	cp $(JULIUS)/gram$(TOOLDIR)s/dfa_minimize/dfa_minimize  $(TOOLDIR)/.
 	node-gyp rebuild
-endif
-ifeq ($(OS), Darwin)
-all:
-	mkdir -p $(TOOLDIR)
-	cd $(JULIUS) && ./configure --with-mictype=portaudio && make
-	cp $(JULIUS)/gramtools/mkdfa/mkdfa.pl                  $(TOOLDIR)/mkdfa
-	cp $(JULIUS)/gramtools/mkdfa/mkfa-1.44-flex/mkfa.dSYM  $(TOOLDIR)/mkfa
-	cp $(JULIUS)/gramtools/generate/generate.dSYM          $(TOOLDIR)/generate
-	cp $(JULIUS)/gramtools/dfa_minimize/dfa_minimize.dSYM  $(TOOLDIR)/dfa_minimize
-	node-gyp rebuild
-endif
 
 clean:
 	rm -rf $(TOOLDIR)

@@ -1,6 +1,6 @@
 {
 	'variables': {
-		'julius_ver'     : '4.3',
+		'julius_ver'     : '4.4.2',
 		'libjulius_path' : 'julius-<(julius_ver)/libjulius',
 		'libsent_path'   : 'julius-<(julius_ver)/libsent',
 	},

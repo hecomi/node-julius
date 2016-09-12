@@ -1,0 +1,125 @@
+dnl Copyright (c) 1991-2016 Kawahara Lab., Kyoto University
+dnl Copyright (c) 2000-2005 Shikano Lab., Nara Institute of Science and Technology
+dnl Copyright (c) 2005-2016 Julius project team, Nagoya Institute of Technology
+dnl All rights reserved
+dnl
+AC_INIT(00readme.txt)
+AC_CONFIG_AUX_DIR(../support)
+dnl Checks for optimization flag
+AC_CANONICAL_HOST
+AC_MSG_CHECKING([host-specific optimization flag])
+if test -z "$CFLAGS" ; then
+    OPTFLAG=../support/cflags.${host_cpu}-${host_vendor}-${host_os}
+    if test -f "$OPTFLAG" ; then
+	. $OPTFLAG
+	AC_MSG_RESULT([$OPTFLAG])
+    else
+	AC_MSG_RESULT([no])
+    fi
+else
+    AC_MSG_RESULT([skipped])
+fi
+AC_PROG_CC
+AC_PROG_CPP
+AC_PROG_INSTALL
+AC_EXEEXT
+
+dnl Checks for optimization flag
+AC_MSG_CHECKING([host specific optimization flag])
+if test -z "$CFLAGS" ; then
+    OPTFLAG=../support/cflags.${host_cpu}-${host_vendor}-${host_os}
+    if test -f "$OPTFLAG" ; then
+	. $OPTFLAG
+	AC_MSG_RESULT([$OPTFLAG])
+    else
+	AC_MSG_RESULT([no])
+    fi
+else
+    AC_MSG_RESULT([skipped])
+fi
+
+AC_PATH_PROG(RM,rm)
+AC_PATH_PROG(PERL,perl)
+if test -z "$PERL"; then
+	AC_MSG_ERROR([perl not found! installation terminated])
+fi
+dnl AC_PATH_PROG(NKF, nkf)
+dnl if test -z "$NKF"; then
+dnl 	AC_MSG_ERROR([nkf not found! installation terminated])
+dnl fi
+
+dnl not more use of bison and flex: use pre-compiled source instead
+dnl AC_PATH_PROG(BISON, bison)
+dnl if test -z "$BISON"; then
+dnl 	AC_MSG_ERROR([bison not found! installation terminated])
+dnl fi
+dnl AC_PATH_PROG(FLEX, flex)
+dnl if test -z "$FLEX"; then
+dnl 	AC_MSG_ERROR([flex not found! installation terminated])
+dnl fi
+AC_PATH_PROG(ICONV,iconv)
+if test -z "$ICONV"; then
+	AC_MSG_WARN([no iconv, gram2sapixml.pl may not work])
+else
+    AC_MSG_CHECKING([for Jcode module in perl])
+    if $PERL -mJcode -e "print;"; then
+        AC_MSG_RESULT([yes])
+    else
+	AC_MSG_WARN([no Jcode module in perl, gram2sapixml.pl may not work])
+    fi
+fi
+dnl check for readline library for nextword
+AC_MSG_CHECKING([for a readline library])
+ac_save_LIBS="$LIBS"
+for readline_lib in readline edit editline; do
+    for termcap_lib in "" termcap curses ncurses; do
+        if test -z "$termcap_lib"; then
+            TRY_LIB="-l$readline_lib"
+        else
+            TRY_LIB="-l$readline_lib -l$termcap_lib"
+        fi
+        LIBS="$ac_save_LIBS $TRY_LIB"
+        case "$host_os" in
+          cygwin*|mingw*)
+            LIBS="$LIBS -static"
+            ;;
+        esac
+        AC_TRY_LINK_FUNC(readline, READLINE_LIBS="$TRY_LIB")
+        if test -n "$READLINE_LIBS"; then
+            break
+        fi
+    done
+    if test -n "$READLINE_LIBS"; then
+        break
+    fi
+done
+LIBS="$ac_save_LIBS"
+
+if test -z "$READLINE_LIBS"; then
+    AC_MSG_RESULT([no])
+else
+    AC_MSG_RESULT([$READLINE_LIBS])
+    ac_save_LIBS="$LIBS"
+    LIBS="$LIBS $READLINE_LIBS"
+    AC_DEFINE(HAVE_LIBREADLINE)
+    AC_CHECK_HEADERS(readline.h readline/readline.h)
+    READLINE_LIBS_history="no"
+    AC_TRY_LINK_FUNC(add_history, READLINE_LIBS_history="yes")
+    if test "$READLINE_LIBS_history" = "yes"; then
+        AC_DEFINE(HAVE_LIBREADLINE_HISTORY)
+        AC_CHECK_HEADERS(history.h readline/history.h)
+    fi
+    AC_MSG_CHECKING([for readline verion > 4.1])
+    AC_EGREP_HEADER(rl_compentry_func_t, readline/readline.h,
+	AC_MSG_RESULT([yes]),
+      AC_MSG_RESULT([no - use old func])
+      AC_DEFINE(HAVE_LIBREADLINE_4_1_OLDER)
+    )
+    LIBS="$ac_save_LIBS"
+fi
+AC_SUBST(READLINE_LIBS)
+
+dnl check for malloc.h
+AC_CHECK_HEADERS(malloc.h)
+
+AC_OUTPUT(Makefile mkdfa/Makefile mkdfa/mkdfa.pl mkdfa/mkfa-1.44-flex/Makefile dfa_minimize/Makefile generate/Makefile accept_check/Makefile nextword/Makefile yomi2voca/Makefile yomi2voca/yomi2voca.pl gram2sapixml/Makefile gram2sapixml/gram2sapixml.pl dfa_determinize/Makefile)
