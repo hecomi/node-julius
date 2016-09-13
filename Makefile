@@ -3,22 +3,25 @@ JULIUS  = julius-4.4.2
 TOOLDIR = tool
 
 ifeq ($(OS), Linux)
-FLAGS = --with-mictype=alsa
+FLAGS_AFTER = --with-mictype=alsa --enable-shared
+FLAGS_BEFORE = CFLAGS=-fPIC CXXFLAGS=-fPIC
 else
 ifeq ($(OS), Darwin)
-FLAGS = --with-mictype=portaudio
+FLAGS_AFTER = --with-mictype=portaudio
+FLAGS_BEFORE =
 else
 FLAGS =
+FLAGS_BEFORE =
 endif
 endif
 
 all:
 	mkdir -p $(TOOLDIR)
-	cd $(JULIUS) && ./configure $(FLAGS) && make
-	cp $(JULIUS)/gram$(TOOLDIR)s/mkdfa/mkdfa.pl             $(TOOLDIR)/mkdfa
-	cp $(JULIUS)/gram$(TOOLDIR)s/mkdfa/mkfa-1.44-flex/mkfa  $(TOOLDIR)/.
-	cp $(JULIUS)/gram$(TOOLDIR)s/generate/generate          $(TOOLDIR)/.
-	cp $(JULIUS)/gram$(TOOLDIR)s/dfa_minimize/dfa_minimize  $(TOOLDIR)/.
+	cd $(JULIUS) && $(FLAGS_BEFORE) ./configure $(FLAGS_AFTER) && make
+	cp $(JULIUS)/gramtools/mkdfa/mkdfa.pl             $(TOOLDIR)/mkdfa
+	cp $(JULIUS)/gramtools/mkdfa/mkfa-1.44-flex/mkfa  $(TOOLDIR)/.
+	cp $(JULIUS)/gramtools/generate/generate          $(TOOLDIR)/.
+	cp $(JULIUS)/gramtools/dfa_minimize/dfa_minimize  $(TOOLDIR)/.
 	node-gyp rebuild
 
 clean:
