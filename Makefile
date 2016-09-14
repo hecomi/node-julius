@@ -1,6 +1,7 @@
-OS      = ${shell uname}
-JULIUS  = julius-4.4.2
-TOOLDIR = tool
+OS       = ${shell uname}
+JULIUS   = julius-4.4.2
+TOOLDIR  = tool
+BUILDDIR = build
 
 ifeq ($(OS), Linux)
 FLAGS_AFTER = --with-mictype=alsa --enable-shared
@@ -25,7 +26,7 @@ all:
 	node-gyp rebuild
 
 clean:
-	rm -rf $(TOOLDIR)
+	rm -rf $(TOOLDIR) $(BUILDDIR)
 	cd $(JULIUS) && make clean && make distclean
 	rm -rf node_modules/async node_modules/mecab-async node_modules/kana2voca
 	rmdir node_modules
